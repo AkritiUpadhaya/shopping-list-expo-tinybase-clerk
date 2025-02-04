@@ -51,7 +51,7 @@ export const Button: React.FC<ButtonProps> = ({
       disabled={disabled || loading}
       className={`${baseStyle} ${variantStyles[variant]} ${sizeStyles[size]} ${disabled && "opacity-50"} ${className}`}
     >
-      {loading ? <ActivityIndicator color={isDark ? "black" : "white"} /> : <Text className="font-bold">{children}</Text>}
+      {loading ? <ActivityIndicator color={isDark ? "black" : "white"} /> : <Text className="font-bold text-white">{children}</Text>}
     </Pressable>
   );
 };
