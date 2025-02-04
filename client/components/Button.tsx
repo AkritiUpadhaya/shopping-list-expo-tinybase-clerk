@@ -1,14 +1,5 @@
 import React from "react";
-import {
-  ActivityIndicator,
-  Pressable,
-  StyleSheet,
-  TextStyle,
-  useColorScheme,
-  ViewStyle,
-} from "react-native";
-import { appleBlue, zincColors } from "../constants/Colors";
-
+import { ActivityIndicator, Pressable, Text, useColorScheme } from "react-native";
 
 type ButtonVariant = "filled" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
@@ -20,8 +11,7 @@ interface ButtonProps {
   disabled?: boolean;
   loading?: boolean;
   children: React.ReactNode;
-  style?: ViewStyle;
-  textStyle?: TextStyle;
+  className?: string;
 }
 
 export const Button: React.FC<ButtonProps> = ({
@@ -31,96 +21,37 @@ export const Button: React.FC<ButtonProps> = ({
   disabled = false,
   loading = false,
   children,
-  style,
-  textStyle,
+  className,
 }) => {
   const colorScheme = useColorScheme();
   const isDark = colorScheme === "dark";
 
-  const sizeStyles: Record<
-    ButtonSize,
-    { height: number; fontSize: number; padding: number }
-  > = {
-    sm: { height: 36, fontSize: 14, padding: 12 },
-    md: { height: 44, fontSize: 16, padding: 16 },
-    lg: { height: 55, fontSize: 18, padding: 20 },
+
+  const baseStyle = "rounded-lg flex-row items-center justify-center";
+
+
+  const variantStyles: Record<ButtonVariant, string> = {
+    filled: isDark ? "bg-gray-50 text-gray-900" : "bg-gray-900 text-gray-50",
+    outline: isDark
+      ? "border border-gray-700 bg-transparent text-blue-500"
+      : "border border-gray-300 bg-transparent text-blue-500",
+    ghost: "bg-transparent text-blue-500",
   };
 
-  const getVariantStyle = () => {
-    const baseStyle: ViewStyle = {
-      borderRadius: 12,
-      flexDirection: "row",
-      alignItems: "center",
-      justifyContent: "center",
-    };
 
-    switch (variant) {
-      case "filled":
-        return {
-          ...baseStyle,
-          backgroundColor: isDark ? zincColors[50] : zincColors[900],
-        };
-      case "outline":
-        return {
-          ...baseStyle,
-          backgroundColor: "transparent",
-          borderWidth: 1,
-          borderColor: isDark ? zincColors[700] : zincColors[300],
-        };
-      case "ghost":
-        return {
-          ...baseStyle,
-          backgroundColor: "transparent",
-        };
-    }
-  };
-
-  const getTextColor = () => {
-    if (disabled) {
-      return isDark ? zincColors[500] : zincColors[400];
-    }
-
-    switch (variant) {
-      case "filled":
-        return isDark ? zincColors[900] : zincColors[50];
-      case "outline":
-      case "ghost":
-        return appleBlue;
-    }
+  const sizeStyles: Record<ButtonSize, string> = {
+    sm: "h-9 px-3 text-sm",
+    md: "h-11 px-4 text-base",
+    lg: "h-14 px-5 text-lg",
   };
 
   return (
     <Pressable
       onPress={onPress}
       disabled={disabled || loading}
-      style={[
-        getVariantStyle(),
-        {
-          height: sizeStyles[size].height,
-          paddingHorizontal: sizeStyles[size].padding,
-          opacity: disabled ? 0.5 : 1,
-        },
-        style,
-      ]}
+      className={`${baseStyle} ${variantStyles[variant]} ${sizeStyles[size]} ${disabled && "opacity-50"} ${className}`}
     >
-      {loading ? (
-        <ActivityIndicator color={getTextColor()} />
-      ) : (
-        <Text
-          style={StyleSheet.flatten([
-            {
-              fontSize: sizeStyles[size].fontSize,
-              color: getTextColor(),
-              textAlign: "center",
-              marginBottom: 0,
-              fontWeight: "700",
-            },
-            textStyle,
-          ])}
-        >
-          {children}
-        </Text>
-      )}
+      {loading ? <ActivityIndicator color={isDark ? "black" : "white"} /> : <Text className="font-bold">{children}</Text>}
     </Pressable>
   );
 };
