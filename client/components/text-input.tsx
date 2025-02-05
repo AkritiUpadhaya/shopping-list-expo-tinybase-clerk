@@ -168,6 +168,7 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   label: {
+    marginLeft: 8,
     fontWeight: "500",
   },
   error: {

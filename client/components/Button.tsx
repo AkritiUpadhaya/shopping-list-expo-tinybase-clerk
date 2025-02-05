@@ -1,5 +1,7 @@
 import React from "react";
 import { ActivityIndicator, Pressable, Text, useColorScheme } from "react-native";
+import { zincColors } from "~/constants/Colors";
+
 
 type ButtonVariant = "filled" | "outline" | "ghost";
 type ButtonSize = "sm" | "md" | "lg";
@@ -31,10 +33,10 @@ export const Button: React.FC<ButtonProps> = ({
 
 
   const variantStyles: Record<ButtonVariant, string> = {
-    filled: isDark ? "bg-gray-50 text-gray-900" : "bg-gray-900 text-gray-50",
-    outline: isDark
-      ? "border border-gray-700 bg-transparent text-blue-500"
-      : "border border-gray-300 bg-transparent text-blue-500",
+    filled: isDark ? "bg-zinc-50 text-zinc-900" : "bg-zinc-900 text-black",
+    outline: isDark 
+      ? "border border-zinc-700 text-zinc-50" 
+      : "border border-zinc-300 text-zinc-900",
     ghost: "bg-transparent text-blue-500",
   };
 
@@ -46,12 +48,18 @@ export const Button: React.FC<ButtonProps> = ({
   };
 
   return (
-    <Pressable
+    <Pressable 
       onPress={onPress}
       disabled={disabled || loading}
-      className={`${baseStyle} ${variantStyles[variant]} ${sizeStyles[size]} ${disabled && "opacity-50"} ${className}`}
+      className={`${baseStyle} ${variantStyles[variant]} ${sizeStyles[size]} ${disabled ? "opacity-50" : ""} ${className || ""}`}
     >
-      {loading ? <ActivityIndicator color={isDark ? "black" : "white"} /> : <Text className="font-bold text-white">{children}</Text>}
+      {loading ? (
+        <ActivityIndicator color={isDark ? "black" : "white"} />
+      ) : (
+        <Text className={`font-medium ${variantStyles[variant].includes('text-') ? '' : isDark ? 'text-zinc-900' : 'text-zinc-50'}`}>
+          {children}
+        </Text>
+      )}
     </Pressable>
   );
 };
