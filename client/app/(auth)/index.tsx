@@ -3,6 +3,8 @@ import React, { useState } from 'react'
 import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import Button from '~/components/Button'
+import TextInput from '~/components/text-input'
+import { BodyScrollView } from '~/components/BodyScrollView'
 
 const SignIn = () => {
   const {signIn, setActive, isLoaded}= useSignIn()
@@ -11,15 +13,16 @@ const SignIn = () => {
   const [password, setPassword]= useState("")
   const [isSignIn, setIsSignIn]= useState(false)
   return (
-    <View className='flex-1 items-center justify-center'>
+    <BodyScrollView>
         <SafeAreaView>
-        <Text className='text-2xl text-black text-center'>Sign In Hello hello</Text>
+        <Text>Sign In</Text>
         <Link href={"/sign-up"}> go to sign up</Link>
         <Button>Hello</Button>
+        <TextInput label='Hello' placeholder='Hi Hi' inputStyle={{backgroundColor: "blue"}}/>
 
         </SafeAreaView>
      
-    </View>
+    </BodyScrollView>
   )
 }
 

@@ -5,7 +5,7 @@ export default function AuthLayout(){
     if(!isLoaded) return null
     if(isSignedIn) return <Redirect href={"/index"} />
     return(
-        <Stack>
+        <Stack screenOptions={{headerLargeTitle: true, headerTransparent: true}}>
             <Stack.Screen name='index' options={{headerShown:false}} />
             <Stack.Screen name='sign-up' options={{headerShown:true, title:"Sign Up"}} />
             <Stack.Screen name='reset-password' options={{headerShown:true, title:"Reset Password"}} />
