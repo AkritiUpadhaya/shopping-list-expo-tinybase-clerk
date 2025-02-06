@@ -6,10 +6,11 @@ import Button from '~/components/Button'
 import TextInput from '~/components/text-input'
 import { BodyScrollView } from '~/components/BodyScrollView'
 import { useColorScheme } from 'react-native'
+import { router } from 'expo-router'
 
 const SignIn = () => {
   const {signIn, setActive, isLoaded}= useSignIn()
-  const router = useRouter();
+  // const router = useRouter();
   const [email, setEmail]= useState('')
   const [password, setPassword]= useState("")
   const [isSignIn, setIsSignIn]= useState(false)
@@ -40,12 +41,12 @@ const SignIn = () => {
 
         <View className='mt-4'>
           <Text className='text-center'>Dont have an account?</Text>
-          <Button onPress={()=> router.push("/sign-up")} variant='ghost'>Sign up</Button>
+          <Button onPress={() => router.push('./sign-up')} variant='ghost'>Sign up</Button>
         </View>
 
         <View className='mt-4'>
           <Text className='text-center'>Forgot your password?</Text>
-          <Button onPress={()=> router.push("/reset-password")} variant='ghost'>Reset password</Button>
+          <Button onPress={() => router.push('./reset-password')} variant='ghost'>Reset password</Button>
         </View>
         </SafeAreaView>
      

@@ -48,7 +48,7 @@ const SignUp = () => {
           })
           if(signUpAttempt.status==="complete"){
             await setActive({session:signUpAttempt.createdSessionId})
-            router.replace("/")
+            router.replace('./')
           }else{
             console.log(signUpAttempt)
           }
@@ -90,7 +90,7 @@ const SignUp = () => {
             <TextInput label='Password' placeholder='Enter your password'
             autoCapitalize='none'
             secureTextEntry={true}
-            onChangeText={(password)=> setPassword} />
+            onChangeText={(password)=> setPassword(password)} />
             <Button onPress={onSignUpPress}
             loading={isLoading}
             disabled={!emailAddress || !password || isLoading}>Continue</Button>
