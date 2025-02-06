@@ -33,7 +33,7 @@ export const Button: React.FC<ButtonProps> = ({
 
 
   const variantStyles: Record<ButtonVariant, string> = {
-    filled: isDark ? "bg-zinc-50 text-zinc-900" : "bg-zinc-900 text-black",
+    filled: isDark ? "bg-zinc-50 text-zinc-900" : "bg-zinc-900 text-white",
     outline: isDark 
       ? "border border-zinc-700 text-zinc-50" 
       : "border border-zinc-300 text-zinc-900",
