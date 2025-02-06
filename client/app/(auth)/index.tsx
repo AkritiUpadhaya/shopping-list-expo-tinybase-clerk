@@ -7,17 +7,40 @@ import TextInput from '~/components/text-input'
 import { BodyScrollView } from '~/components/BodyScrollView'
 import { useColorScheme } from 'react-native'
 import { router } from 'expo-router'
-
+import { ClerkAPIError } from '@clerk/types'
 const SignIn = () => {
   const {signIn, setActive, isLoaded}= useSignIn()
   // const router = useRouter();
-  const [email, setEmail]= useState('')
+  const [emailAddress, setEmailAddress]= useState('')
   const [password, setPassword]= useState("")
   const [isSignIn, setIsSignIn]= useState(false)
   const colorScheme = useColorScheme()
-  const onSignPress=()=>{
+  const[error, setError]= useState<ClerkAPIError[]>([])
+  
+  const onSignPress=React.useCallback(async()=>{
+    if(!isLoaded) return
 
-  }
+    try{
+      const signInAttempt= await signIn.create({
+        identifier:emailAddress,
+        password
+      })
+      if(signInAttempt.status==="complete"){
+        await setActive({session:signInAttempt.createdSessionId})
+        router.replace("./(index)")
+      }
+      else{
+        console.error(JSON.stringify(signInAttempt, null, 2))
+      }
+     
+    }
+    catch(error){
+      console.error(JSON.stringify(error, null, 2))
+    }
+    finally{
+      setIsSignIn(false)
+    }
+  }, [isLoaded, emailAddress, password, signIn, router, setActive])
   return (
     <BodyScrollView 
     contentContainerStyle={{
@@ -29,7 +52,7 @@ const SignIn = () => {
         <TextInput label='Email' placeholder='Enter your email'
         autoCapitalize='none'
         keyboardType='email-address'
-        onChangeText={setEmail} />
+        onChangeText={setEmailAddress} />
 
         <TextInput label='Password' placeholder='Enter your password'
         autoCapitalize='none'
@@ -37,7 +60,10 @@ const SignIn = () => {
         onChangeText={setPassword} />
         <Button onPress={onSignPress}
         loading={isSignIn}
-        disabled={!email || !password}>Sign in</Button>
+        disabled={!emailAddress || !password}>Sign in</Button>
+        {error.map((error)=>(
+            <Text key={error.longMessage} style={{color:'red'}}>{error.longMessage}</Text>
+          ))}
 
         <View className='mt-4'>
           <Text className='text-center'>Dont have an account?</Text>

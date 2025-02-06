@@ -33,11 +33,13 @@ export const Button: React.FC<ButtonProps> = ({
 
 
   const variantStyles: Record<ButtonVariant, string> = {
-    filled: isDark ? "bg-zinc-50 text-zinc-900" : "bg-zinc-900 text-white",
+    filled: isDark 
+      ? "bg-zinc-50 text-zinc-900" 
+      : "bg-zinc-900 text-zinc-50",
     outline: isDark 
       ? "border border-zinc-700 text-zinc-50" 
       : "border border-zinc-300 text-zinc-900",
-    ghost: "bg-transparent text-blue-500",
+    ghost: "bg-transparent text-zinc-900 dark:text-zinc-50",
   };
 
 
@@ -56,7 +58,13 @@ export const Button: React.FC<ButtonProps> = ({
       {loading ? (
         <ActivityIndicator color={isDark ? "black" : "white"} />
       ) : (
-        <Text className={`font-medium ${variantStyles[variant].includes('text-') ? '' : isDark ? 'text-zinc-900' : 'text-zinc-50'}`}>
+        <Text className={`font-medium ${
+          variant === 'ghost' 
+            ? 'text-zinc-900 dark:text-zinc-50' 
+            : variant === 'filled'
+              ? isDark ? 'text-zinc-900' : 'text-zinc-50'
+              : isDark ? 'text-zinc-50' : 'text-zinc-900'
+        }`}>
           {children}
         </Text>
       )}
