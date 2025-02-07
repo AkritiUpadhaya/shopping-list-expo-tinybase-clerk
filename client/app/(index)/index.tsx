@@ -4,7 +4,7 @@ import Button from '~/components/Button'
 import { BodyScrollView } from '~/components/BodyScrollView'
 import { SignedOut, useClerk } from '@clerk/clerk-expo'
 import { router, Stack } from 'expo-router'
-import {AntDesign} from '@expo/vector-icons';
+import {AntDesign, FontAwesome} from '@expo/vector-icons';
 
 const Home = () => {
   const {signOut}= useClerk()
@@ -15,20 +15,14 @@ const Home = () => {
         <AntDesign name="plus" size={24} color="black" />
       </Pressable>
     )}
-    const renderHeaderLeft=()=>{
-    return(
-      <Pressable>
-
-      </Pressable>
-    )}
 
   return (
     <>
     <Stack.Screen options={{
       title:'Home',
       headerLeft:()=>(
-        <Pressable onPress={()=>{}} style={{padding:10, marginLeft:10, backgroundColor:'red'}}>
-          <AntDesign name="plus" size={24} color="black" />
+        <Pressable onPress={()=>{}} >
+          <FontAwesome name="gear" size={24} color="black" />
         </Pressable>
         ),
       headerRight: renderHeaderRight
