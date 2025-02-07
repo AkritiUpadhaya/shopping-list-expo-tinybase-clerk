@@ -11,7 +11,7 @@ const Home = () => {
   const renderHeaderRight=()=>{
     return(
       <Pressable
-      onPress={()=>{console.log('pressed')}}>
+      onPress={()=>{router.push('/list/new')}}>
         <AntDesign name="plus" size={24} color="black" />
       </Pressable>
     )}
@@ -21,7 +21,7 @@ const Home = () => {
     <Stack.Screen options={{
       title:'Home',
       headerLeft:()=>(
-        <Pressable onPress={()=>{}} >
+        <Pressable onPress={()=>{router.push('/(index)/list/new/profile')}} >
           <FontAwesome name="gear" size={24} color="black" />
         </Pressable>
         ),
