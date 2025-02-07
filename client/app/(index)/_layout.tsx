@@ -1,6 +1,11 @@
-import {router, Stack} from 'expo-router'
+import { useUser } from '@clerk/clerk-expo'
+import {Redirect, router, Stack} from 'expo-router'
 import Button from '~/components/Button'
 export default function HomeLayout(){
+    const {user}= useUser()
+    if(!user){
+        return <Redirect href={"/(auth)"}/>
+    }
     return(
         <Stack>
             <Stack.Screen name='index' options={{headerTitle:'shopping list'}}/>
