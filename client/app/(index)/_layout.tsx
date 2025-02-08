@@ -8,7 +8,7 @@ export default function HomeLayout(){
     }
     return(
         <Stack>
-            <Stack.Screen name='index' options={{headerTitle:'shopping list'}}/>
+            <Stack.Screen name='index' options={{headerTitle:'shopping list', headerLargeTitle:true}}/>
             <Stack.Screen name='list/new/index' options={{
                 presentation:'formSheet',
                 sheetGrabberVisible:true,
