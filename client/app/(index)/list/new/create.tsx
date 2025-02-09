@@ -17,8 +17,8 @@ export default function CreateList(){
         }}
         />
         <BodyScrollView contentContainerStyle={{padding:30}}>
-            {/* <SafeAreaView className=""> */}
-                <View className="flex-row items-center ">
+            <View className="flex-row items-center justify-between space-x-2">
+                <View className="flex-1">
                     <TextInput 
                     placeholder="Grocery Essentials" 
                     variant="ghost"
@@ -28,25 +28,19 @@ export default function CreateList(){
                     returnKeyType="done"
                     autoFocus
                     />
-                    <Link href={'/'}>
-                    {/* <View className="h-10 w-10 items-center justify-center p-3 border-2 border-gray-500 rounded-full"> */}
-                        <Text className="text-xl">{"🥹"}</Text>
-                    {/* </View> */}
-                    </Link>
-
-                    <Link href={'/'}>
-                    {/* <View className="h-10 w-10 items-center justify-center p-3 border-2 border-gray-500 rounded-full"> */}
-                        <View style={{
-                            width:24,
-                            height:24,
-                            borderRadius:100,
-                            backgroundColor:"blue"
-                        }}/>
-                    {/* </View> */}
-                    </Link>
-
                 </View>
-                <TextInput
+                <View className="flex-row items-center space-x-2">
+                    <Link href={'/'}>
+                        <Text className="text-2xl">🥹</Text>
+                    </Link>
+
+                    <Link href={'/'}>
+                        <View className="h-6 w-6 rounded-full bg-blue-500"/>
+                    </Link>
+                </View>
+            </View>
+
+            <TextInput
                 placeholder="description (optional)"
                 value={listDescription}
                 onChangeText={setListDescription}
@@ -57,12 +51,11 @@ export default function CreateList(){
                     fontSize:16,
                     fontWeight:"500"
                 }}
-                />
-                <Button
+            />
+            <Button
                 onPress={handleCreateList}
                 disabled={!listName}
                 variant="ghost">Create list</Button>
-            {/* </SafeAreaView> */}
         </BodyScrollView>
         </>
     )
