@@ -1,12 +1,14 @@
 import { useUser } from '@clerk/clerk-expo'
 import {Redirect, router, Stack} from 'expo-router'
 import Button from '~/components/Button'
+import { ListCreationProvider } from '~/context/ListCreationContext'
 export default function HomeLayout(){
     const {user}= useUser()
     if(!user){
         return <Redirect href={"/(auth)"}/>
     }
     return(
+        <ListCreationProvider>
         <Stack>
             <Stack.Screen name='index' options={{headerTitle:'shopping list', headerLargeTitle:true}}/>
             <Stack.Screen name='list/new/index' options={{
@@ -31,6 +33,15 @@ export default function HomeLayout(){
                )
             }
             }/>
+            <Stack.Screen name='list/new/emoji-picker' options={{
+                headerTitle:"choose an emoji",
+                presentation:'formSheet',
+                sheetGrabberVisible:true,
+                headerShown:false,
+                sheetAllowedDetents:[0.5, 0.75, 1]
+            }
+            }/>
         </Stack>
+        </ListCreationProvider>
     )
 }

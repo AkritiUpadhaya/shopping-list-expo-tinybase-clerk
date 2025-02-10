@@ -30,7 +30,7 @@ export default function CreateList(){
                     />
                 </View>
                 <View className="flex-row items-center space-x-2">
-                    <Link href={'/'}>
+                    <Link href={'/(index)/list/new/emoji-picker'}>
                         <Text className="text-2xl">🥹</Text>
                     </Link>
 

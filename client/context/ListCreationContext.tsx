@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react"
-
 type ListCreationContextType={
     selectedEmoji:string,
     selectedColor:string,
@@ -21,7 +20,6 @@ export function ListCreationProvider({children}:{
             selectedColor,
             setSelectedEmoji,
             setSelectedColor,
-
         }}>
             {children}
         </ListCreationContext.Provider>
