@@ -41,6 +41,15 @@ export default function HomeLayout(){
                 sheetAllowedDetents:[0.5, 0.75, 1]
             }
             }/>
+            
+            <Stack.Screen name='list/new/color-picker' options={{
+                headerTitle:"choose a color",
+                presentation:'formSheet',
+                sheetGrabberVisible:true,
+                headerShown:false,
+                sheetAllowedDetents:[0.5, 0.75, 1]
+            }
+            }/>
         </Stack>
         </ListCreationProvider>
     )

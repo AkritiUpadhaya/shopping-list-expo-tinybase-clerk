@@ -1,13 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Stack } from "expo-router";
 import { SafeAreaView, Text, View } from "react-native";
 import { BodyScrollView } from "~/components/BodyScrollView";
 import TextInput from "~/components/text-input";
 import Button from "~/components/Button";
+import { useListCreation } from "~/context/ListCreationContext";
+import { backgroundColors, emojies } from "~/constants/Colors";
 
 export default function CreateList(){
     const [listName, setListName]= useState("")
     const [listDescription, setListDescription]= useState("")
+    const {selectedColor, selectedEmoji, setSelectedColor, setSelectedEmoji}= useListCreation()
+
+    useEffect(()=>{
+        setSelectedColor(backgroundColors[Math.floor(Math.random()*backgroundColors.length)])
+        setSelectedEmoji(emojies[Math.floor(Math.random()*emojies.length)])
+
+        return()=>{
+            setSelectedColor("")
+            setSelectedEmoji("")
+        }
+    }, [])
+
     const handleCreateList=()=>{}
     return (
         <>
@@ -31,11 +45,16 @@ export default function CreateList(){
                 </View>
                 <View className="flex-row items-center space-x-2">
                     <Link href={'/(index)/list/new/emoji-picker'}>
-                        <Text className="text-2xl">🥹</Text>
+                        <Text className="text-2xl">{selectedEmoji}</Text>
                     </Link>
 
-                    <Link href={'/'}>
-                        <View className="h-6 w-6 rounded-full bg-blue-500"/>
+                    <Link href={'/(index)/list/new/color-picker'}>
+                        <View style={{
+                            width:24,
+                            height:24,
+                            borderRadius:100,
+                            backgroundColor: selectedColor
+                        }}/>
                     </Link>
                 </View>
             </View>
