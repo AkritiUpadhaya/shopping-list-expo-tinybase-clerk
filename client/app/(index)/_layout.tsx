@@ -2,12 +2,14 @@ import { useUser } from '@clerk/clerk-expo'
 import {Redirect, router, Stack} from 'expo-router'
 import Button from '~/components/Button'
 import { ListCreationProvider } from '~/context/ListCreationContext'
+import {Provider as TinyBaseProvider} from 'tinybase/ui-react'
 export default function HomeLayout(){
     const {user}= useUser()
     if(!user){
         return <Redirect href={"/(auth)"}/>
     }
     return(
+        <TinyBaseProvider>
         <ListCreationProvider>
         <Stack>
             <Stack.Screen name='index' options={{headerTitle:'shopping list', headerLargeTitle:true}}/>
@@ -52,5 +54,6 @@ export default function HomeLayout(){
             }/>
         </Stack>
         </ListCreationProvider>
+        </TinyBaseProvider>
     )
 }
