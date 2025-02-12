@@ -1,6 +1,8 @@
-import { createMergeableStore } from 'tinybase/mergeable-store';
+import { createMergeableStore } from 'tinybase/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas'
 import { useCreateClientPersister } from './persistence/useCreateClientPersister';
+import { useCreateServerSynchronization } from './synchronization/useSynchronization';
+import { useUserIdAndNickname } from '~/hooks/useNickname';
 
 const STORE_ID_PREFIX = "shoppingListStore-";
 
@@ -67,6 +69,11 @@ const TABLES_SCHEMA = {
     const store= useCreateMergeableStore(()=>
     createMergeableStore(). setSchema(TABLES_SCHEMA, VALUES_SCHEMA))
 
+    const [userId, nickname]= useUserIdAndNickname()
+
     useCreateClientPersister(storeId, store, initialContentJson,()=>
     store.setRow("collaborators", userId, {nickname}))
+    useCreateServerSynchronization(storeId, store)
+    useProvideStore(storeId, store)
+    return null 
   }
