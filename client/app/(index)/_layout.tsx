@@ -3,6 +3,7 @@ import {Redirect, router, Stack} from 'expo-router'
 import Button from '~/components/Button'
 import { ListCreationProvider } from '~/context/ListCreationContext'
 import {Provider as TinyBaseProvider} from 'tinybase/ui-react'
+import ShoppingListsStore from '~/stores/ShoppingListsStore'
 export default function HomeLayout(){
     const {user}= useUser()
     if(!user){
@@ -10,6 +11,7 @@ export default function HomeLayout(){
     }
     return(
         <TinyBaseProvider>
+            <ShoppingListsStore/>
         <ListCreationProvider>
         <Stack>
             <Stack.Screen name='index' options={{headerTitle:'shopping list', headerLargeTitle:true}}/>
