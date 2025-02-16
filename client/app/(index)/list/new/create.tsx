@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from "react";
-import { Link, Stack } from "expo-router";
+import { Link, router, Stack } from "expo-router";
 import { SafeAreaView, Text, View } from "react-native";
 import { BodyScrollView } from "~/components/BodyScrollView";
 import TextInput from "~/components/text-input";
 import Button from "~/components/Button";
 import { useListCreation } from "~/context/ListCreationContext";
 import { backgroundColors, emojies } from "~/constants/Colors";
+import { useAddShoppingListCallback } from "~/stores/ShoppingListsStore";
 
 export default function CreateList(){
     const [listName, setListName]= useState("")
     const [listDescription, setListDescription]= useState("")
     const {selectedColor, selectedEmoji, setSelectedColor, setSelectedEmoji}= useListCreation()
+    const useAddShoppingList= useAddShoppingListCallback()
 
     useEffect(()=>{
         setSelectedColor(backgroundColors[Math.floor(Math.random()*backgroundColors.length)])
@@ -22,7 +24,13 @@ export default function CreateList(){
         }
     }, [])
 
-    const handleCreateList=()=>{}
+    const handleCreateList=()=>{
+        if(!listName){
+            return
+        }
+        const listId = useAddShoppingList(listName, listDescription, selectedColor, selectedEmoji)
+        router.replace(`/list/${listId}`)
+    }
     return (
         <>
         <Stack.Screen
