@@ -17,7 +17,9 @@ export const  useCreateClientPersister= <Schemas extends OptionalSchemas>(
         let initialContent: Content<Schemas> | undefined= undefined
         try{
             initialContent= JSON.parse(initialContentJson)
-        } catch{}
+        } catch(e){
+            console.log(e)
+        }
 
         await persister.load(initialContent)
         await persister.startAutoSave()

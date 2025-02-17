@@ -1,4 +1,4 @@
-import { createMergeableStore } from 'tinybase/with-schemas';
+import { createMergeableStore, Value } from 'tinybase/with-schemas';
 import * as UiReact from 'tinybase/ui-react/with-schemas'
 import { useCreateClientPersister } from './persistence/useCreateClientPersister';
 import { useCreateServerSynchronization } from './synchronization/useSynchronization';
@@ -57,6 +57,31 @@ const TABLES_SCHEMA = {
   } = UiReact as UiReact.WithSchemas<Schemas>;
 
   const useStoreId= (listId: string)=> STORE_ID_PREFIX + listId
+
+  export const useShoppingListProductCount= (listId:string)=> useRowCount("products", useStoreId(listId))
+
+  export const useShoppingListUserNicknames= (listId:string)=> Object.entries(
+    useTable("collaborators", useStoreId(listId))
+  ).map(([, {nickname}])=>nickname)
+
+  export const useShoppingListValue = <ValueId extends ShoppingListValueId>(
+    listId: string,
+    valueId: ValueId
+  ): [
+    Value<Schemas[1], ValueId>,
+    (value: Value<Schemas[1], ValueId>) => void
+  ] => [
+    useValue(valueId, useStoreId(listId)),
+    useSetValueCallback(
+      valueId,
+      (value: Value<Schemas[1], ValueId>) => value,
+      [],
+      useStoreId(listId)
+    ),
+  ];
+
+
+
 
   export default function ShoppingListStore({
     listId,
